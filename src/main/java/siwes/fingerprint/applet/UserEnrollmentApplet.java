@@ -52,6 +52,7 @@ public class UserEnrollmentApplet extends JApplet{
 	 * 
 	 */
 	private static final long serialVersionUID = 4988022778791170606L;
+        private String msg;
         
         private DBConnection dbConn = new DBConnection();
 
@@ -302,20 +303,23 @@ public class UserEnrollmentApplet extends JApplet{
                 ByteArrayInputStream imageStream = new ByteArrayInputStream(getTemplate().serialize());
                 Integer imageSize = getTemplate().serialize().length;
 
-                if(dbConn.SaveFingerPrint(imageStream, imageSize))
-                {
-                    setPrompt("user fingerprint successfully enrolled!! ");
-                    JOptionPane.showConfirmDialog(this, "user fingerprint successfully enrolled!! ");
-                    this.startEnrollment.setEnabled(true);
-                }else{
-                    throw new Exception();
-                }
+//                if(dbConn.SaveFingerPrint(imageStream, imageSize))
+//                {
+//                    setPrompt("user fingerprint successfully enrolled!! ");
+//                    JOptionPane.showConfirmDialog(this, "user fingerprint successfully enrolled!! ");
+//                    this.startEnrollment.setEnabled(true);
+//                }else{
+//                    throw new Exception();
+//                }
 
+                msg = dbConn.SaveFingerPrint(imageStream, imageSize);
 
                 }catch(Exception e){
-                        setPrompt("-----Ooops, "+e.getMessage());
+                        //setPrompt("-----Ooops, "+e.getMessage());
+                        JOptionPane.showConfirmDialog(this, msg);
                 }finally{
                         this.saveEnrollment.setEnabled(false);
+                        JOptionPane.showConfirmDialog(this, msg);
                 }
       
 	}

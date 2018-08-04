@@ -95,18 +95,18 @@ public class DBConnection {
         conn = null;
     }
     
-    public boolean SaveFingerPrint(ByteArrayInputStream imageStream, Integer imageSize){
+    public String SaveFingerPrint(ByteArrayInputStream imageStream, Integer imageSize){
         try{
             PreparedStatement saveFingerPrint = conn.prepareStatement(
-                    "INSERT INTO " + db + " (user_id, fingerprint) values(?,?)");
+                    "INSERT INTO user_finger_print (user_id, fingerprint) values(?,?)");
             saveFingerPrint.setInt(1, userId);
             saveFingerPrint.setBinaryStream(2, imageStream, imageSize);
             saveFingerPrint.execute();
             saveFingerPrint.close();
-            return true;
+            return "Fingerprint Image Saved Successfully!";
             
         }catch(SQLException ex){
-           return false; 
+           return ex.getMessage(); 
         }
        
     }
